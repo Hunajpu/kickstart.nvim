@@ -50,10 +50,13 @@ local function bemol()
   end
 end
 
+-- Set JAVA_HOME for JDTLS (requires Java 21+)
+vim.env.JAVA_HOME = '/usr/lib/jvm/java-21-amazon-corretto'
+
 local jdtls = require 'jdtls'
 local jdtls_setup = require 'jdtls.setup'
 
-local home = os.getenv 'HOME'
+local home = vim.fn.expand '~'
 local root_markers = { '.bemol' }
 local root_dir = jdtls_setup.find_root(root_markers)
 local project_name = vim.fn.fnamemodify(root_dir, ':p:h:t')
@@ -69,9 +72,8 @@ local path_to_jar = path_to_plugins .. find_file(path_to_plugins, 'org.eclipse.e
 
 local config = {
   cmd = {
-    -- assumes the java binary is in your PATH and at least java17;
-    -- if not, specify the full path to the binary
-    'java',
+    -- JDTLS requires Java 21+
+    '/usr/lib/jvm/java-21-amazon-corretto/bin/java',
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
