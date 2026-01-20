@@ -95,3 +95,6 @@ vim.cmd [[set runtimepath+=~/Repos/AmazonQNVim]]
 require('amazonq').setup {
   ssoStartUrl = 'https://amzn.awsapps.com/start',
 }
+
+-- Auto-start remote server for Git integration
+local server = vim.fn.serverstart(vim.fn.stdpath('cache') .. '/nvim-server.pipe')
